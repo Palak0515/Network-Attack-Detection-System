@@ -4,29 +4,25 @@ import mysql.connector
 import os
 import joblib
 
-# ----------------- Load ML Model -----------------
 model = joblib.load('model/model.pkl')
 
-# ----------------- Flask App -----------------
+#flask app
 app = Flask(__name__)
 
-# ----------------- Upload Folder -----------------
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-
-# ----------------- MySQL Connection -----------------
+# mysql connection
 def connect_db():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="Palak@0515",
-        database="network_attack_db"
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
 
-
-# ----------------- PREVENTION FUNCTIONS -----------------
+# blacklist
 def is_blocked(ip):
     conn = connect_db()
     cursor = conn.cursor()
@@ -54,7 +50,7 @@ def block_ip(ip, reason):
     conn.close()
 
 
-# ----------------- Routes -----------------
+#routes
 @app.route('/')
 def login():
     return render_template("login.html")
@@ -99,7 +95,7 @@ def dashboard():
     )
 
 
-# ----------------- Predict -----------------
+# predict route
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     if request.method == 'GET':
@@ -108,9 +104,9 @@ def predict():
     try:
         ip = request.remote_addr  # Get user IP
 
-        # ----------------- CHECK IF BLOCKED -----------------
+       
         if is_blocked(ip):
-            return "🚫 Access Denied: Your IP is blocked due to suspicious activity."
+            return "Access Denied: Your IP is blocked due to suspicious activity."
 
         data = request.form
 
@@ -141,11 +137,11 @@ def predict():
 
         result = "Attack" if prediction == 1 else "Normal"
 
-        # ----------------- PREVENTION -----------------
+        
         if result == "Attack":
             block_ip(ip, "Attack detected")
 
-        # ----------------- SAVE TO DB -----------------
+       
         conn = connect_db()
         cursor = conn.cursor()
 
@@ -173,13 +169,12 @@ def predict():
         return f"Error: {str(e)}"
 
 
-# ----------------- Upload Page -----------------
+#upload route
 @app.route('/upload')
 def upload():
     return render_template("upload.html")
 
-
-# ----------------- CSV Upload -----------------
+#upload csv
 @app.route('/upload_csv', methods=['POST'])
 def upload_csv():
     file = request.files.get('file')
@@ -236,6 +231,5 @@ def upload_csv():
         return f"Error: {str(e)}"
 
 
-# ----------------- Run -----------------
 if __name__ == "__main__":
     app.run(debug=True)
