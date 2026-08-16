@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Predict Attack</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    display: flex;
+    background: #f4f6f9;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #2a5298;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: fixed;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.logout-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+}
+.logout-btn:hover {
+    background-color: red;
+    color: white;
+}
+    .main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top:1.5%;
+}
+
+/* Form Card */
+.form-container {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 10px;
+    background: #1e90ff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #3742fa;
+}
+    .form-control{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 5px;
+
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div>
+        <h2>MENU</h2>
+        <a href="/home">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/predict">Predict Attack</a>
+        <a href="/upload">Upload CSV</a>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="main">
+<div class="form-container">
+    <h2>Network Prediction</h2>
+
+    <form method="POST" action="/predict">
+
+        <div class="form-group">
+            <label>Duration</label>
+            <input type="number" step="any" name="duration" required>
+        </div>
+
+        <div class="form-group">
+            <label>Source Bytes</label>
+            <input type="number" step="any" name="src_bytes" required>
+        </div>
+
+        <div class="form-group">
+            <label>Destination Bytes</label>
+            <input type="number" step="any" name="dst_bytes" required>
+        </div>
+
+        <div class="form-group">
+            <label>Count</label>
+            <input type="number" step="any" name="count" required>
+        </div>
+
+        <div class="form-group">
+            <label>Same Service Rate</label>
+            <input type="number" step="any" name="same_srv_rate" required>
+        </div>
+
+        <div class="form-group">
+            <label>Serror Rate</label>
+            <input type="number" step="any" name="serror_rate" required>
+        </div>
+
+        <div class="form-group">
+            <label>Flag</label>
+            <select name="flag" class="form-control" required>
+        <option value="">Select Flag</option>
+        <option value="0">SF (Successful)</option>
+        <option value="1">S0 (No Response)</option>
+        <option value="2">REJ (Rejected)</option>
+        </select>
+        </div>
+
+        <div class="form-group">
+            <label>Logged In</label>
+                    <select name="logged_in" class="form-control" required>
+        <option value="">Select Status</option>
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+               </select>
+        </div>
+
+        <button type="submit">Predict</button>
+
+    </form>
+</div>
+</div>
+
+<script>
+function logout() {
+    window.location.href = "/";
+}
+</script>
+
+</body>
+</html>
