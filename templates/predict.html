@@ -1,212 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Predict Attack</title>
+    <meta charset="UTF-8">
+    <title>Predict Attack</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial;
-    display: flex;
-    background: #f4f6f9;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
 
-/* Sidebar */
-.sidebar {
-    width: 220px;
-    height: 100vh;
-    background: #2a5298;
-    color: white;
-    padding: 20px;
-    box-sizing: border-box;
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 220px;
+            height: 100vh;
+            box-sizing: border-box;
+            padding: 20px;
+            background: #2a5298;
+            color: white;
+        }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+        .sidebar h2 {
+            margin: 0 0 30px;
+        }
 
-    position: fixed;
-    overflow-y: auto;
-}
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            margin: 15px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
 
-.sidebar h2 {
-    margin-bottom: 30px;
-}
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
-.sidebar a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    margin: 15px 0;
-    padding: 10px;
-    border-radius: 6px;
-}
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 180px;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: black;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
 
-.sidebar a:hover {
-    background-color: rgba(255,255,255,0.2);
-}
+        .logout-btn:hover {
+            background: red;
+        }
 
-.logout-btn {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 15px;
-    width: 100%;
-    text-align: center;
-}
-.logout-btn:hover {
-    background-color: red;
-    color: white;
-}
-    .main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top:1.5%;
-}
+        .main {
+            margin-left: 220px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-/* Form Card */
-.form-container {
-    background: white;
-    padding: 30px 40px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+        .form-container {
+            width: 400px;
+            padding: 30px 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
-.form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+        .form-container h2 {
+            text-align: center;
+            margin: 0 0 25px;
+        }
 
-/* Inputs */
-.form-group {
-    margin-bottom: 15px;
-}
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-label {
-    font-size: 14px;
-    display: block;
-    margin-bottom: 5px;
-}
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
 
-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+        input,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 9px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-/* Button */
-button {
-    width: 100%;
-    padding: 10px;
-    background: #1e90ff;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
+        .predict-btn {
+            width: 100%;
+            margin-top: 5px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #1e90ff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-button:hover {
-    background: #3742fa;
-}
-    .form-control{
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 5px;
-
-    }
-</style>
+        .predict-btn:hover {
+            background: #3742fa;
+        }
+    </style>
 </head>
 
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <div>
+    <div class="sidebar">
         <h2>MENU</h2>
+
         <a href="/home">Home</a>
         <a href="/dashboard">Dashboard</a>
         <a href="/predict">Predict Attack</a>
         <a href="/upload">Upload CSV</a>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
 
-<div class="main">
-<div class="form-container">
-    <h2>Network Prediction</h2>
+    <div class="main">
+        <div class="form-container">
 
-    <form method="POST" action="/predict">
+            <h2>Network Prediction</h2>
 
-        <div class="form-group">
-            <label>Duration</label>
-            <input type="number" step="any" name="duration" required>
+            <form action="/predict" method="POST">
+
+                <div class="form-group">
+                    <label for="duration">Duration</label>
+                    <input type="number" step="any" id="duration"
+                           name="duration" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="src_bytes">Source Bytes</label>
+                    <input type="number" step="any" id="src_bytes"
+                           name="src_bytes" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dst_bytes">Destination Bytes</label>
+                    <input type="number" step="any" id="dst_bytes"
+                           name="dst_bytes" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="count">Count</label>
+                    <input type="number" step="any" id="count"
+                           name="count" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="same_srv_rate">Same Service Rate</label>
+                    <input type="number" step="any" id="same_srv_rate"
+                           name="same_srv_rate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="serror_rate">Serror Rate</label>
+                    <input type="number" step="any" id="serror_rate"
+                           name="serror_rate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="flag">Flag</label>
+                    <select id="flag" name="flag" required>
+                        <option value="">Select Flag</option>
+                        <option value="0">SF (Successful)</option>
+                        <option value="1">S0 (No Response)</option>
+                        <option value="2">REJ (Rejected)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="logged_in">Logged In</label>
+                    <select id="logged_in" name="logged_in" required>
+                        <option value="">Select Status</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="predict-btn">Predict</button>
+
+            </form>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label>Source Bytes</label>
-            <input type="number" step="any" name="src_bytes" required>
-        </div>
-
-        <div class="form-group">
-            <label>Destination Bytes</label>
-            <input type="number" step="any" name="dst_bytes" required>
-        </div>
-
-        <div class="form-group">
-            <label>Count</label>
-            <input type="number" step="any" name="count" required>
-        </div>
-
-        <div class="form-group">
-            <label>Same Service Rate</label>
-            <input type="number" step="any" name="same_srv_rate" required>
-        </div>
-
-        <div class="form-group">
-            <label>Serror Rate</label>
-            <input type="number" step="any" name="serror_rate" required>
-        </div>
-
-        <div class="form-group">
-            <label>Flag</label>
-            <select name="flag" class="form-control" required>
-        <option value="">Select Flag</option>
-        <option value="0">SF (Successful)</option>
-        <option value="1">S0 (No Response)</option>
-        <option value="2">REJ (Rejected)</option>
-        </select>
-        </div>
-
-        <div class="form-group">
-            <label>Logged In</label>
-                    <select name="logged_in" class="form-control" required>
-        <option value="">Select Status</option>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-               </select>
-        </div>
-
-        <button type="submit">Predict</button>
-
-    </form>
-</div>
-</div>
-
-<script>
-function logout() {
-    window.location.href = "/";
-}
-</script>
+    <script>
+        function logout() {
+            window.location.href = "/";
+        }
+    </script>
 
 </body>
 </html>
