@@ -12,7 +12,6 @@ body {
     background: #f4f6f9;
 }
 
-/* Sidebar */
 .sidebar {
     width: 220px;
     height: 100vh;
@@ -62,7 +61,6 @@ body {
     color: white;
 }
 
-    /* Main */
     .main {
         flex: 1;
         padding: 20px;
@@ -118,14 +116,12 @@ body {
     display: none;
 }
 
-/* Table */
 table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
 }
 
-/* Header */
 th {
     background: #2a5298;
     color: white;
@@ -133,18 +129,15 @@ th {
     text-align: left;
 }
 
-/* Cells */
 td {
     padding: 10px;
     border-bottom: 1px solid #eee;
 }
 
-/* Zebra effect */
 tr:nth-child(even) {
     background: #f8f9fc;
 }
 
-/* Hover effect */
 tr:hover {
     background: #e6ecff;
     transition: 0.3s;
@@ -160,7 +153,6 @@ tr:hover {
 
 <body>
 
-<!-- Sidebar -->
 <div class="sidebar">
     <div>
         <h2>MENU</h2>
@@ -172,13 +164,11 @@ tr:hover {
     <button class="logout-btn" onclick="logout()">Logout</button>
 </div>
 
-<!-- Main -->
 <div class="main">
     <div class="navbar">
         <h2>UPLOAD CSV</h2>
     </div>
 <div class="m2">
-    <!-- Upload -->
     <div class="upload-box">
         <h2>Select CSV File</h2>
         <input type="file" id="fileInput" accept=".csv">
@@ -186,9 +176,8 @@ tr:hover {
         <button class="btn" onclick="uploadFile()">Upload</button>
     </div>
 </div>
-    <!-- Table -->
+
     <div class="table">
-<!--        <h3>CSV Data</h3>-->
         <table id="csvTable">
             <thead></thead>
             <tbody></tbody>
