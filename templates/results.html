@@ -1,155 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Results</title>
+    <meta charset="UTF-8">
+    <title>Results</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: Arial;
-    display: flex;
-    background: #f4f6f9;
-}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+        }
 
-/* Sidebar */
-.sidebar {
-    width: 220px;
-    height: 100vh;
-    background: #2a5298;
-    color: white;
-    padding: 20px;
-    box-sizing: border-box;
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            background-color: #2a5298;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+            position: fixed;
+        }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+        .sidebar h2 {
+            margin-bottom: 30px;
+        }
 
-    position: fixed;
-    overflow-y: auto;
-}
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
 
-.sidebar h2 {
-    margin-bottom: 30px;
-}
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
 
-.sidebar a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    margin: 15px 0;
-    padding: 10px;
-    border-radius: 6px;
-}
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 180px;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
 
-.sidebar a:hover {
-    background-color: rgba(255,255,255,0.2);
-}
+        .logout-btn:hover {
+            background-color: red;
+        }
 
-.logout-btn {
-    background-color: black;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 15px;
-    width: 100%;
-    text-align: center;
-}
-.logout-btn:hover {
-    background-color: red;
-    color: white;
-}
+        .main {
+            margin-left: 220px;
+            width: calc(100% - 220px);
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-.main {
-    flex: 1;
-    padding: 20px;
-}
+        .navbar {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
-    .navbar {
-        display: flex;
-        justify-content: space-between;;
-        background: white;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-.navbar h2 {
-    padding-left: 41%;
-}
+        .navbar h2 {
+            margin: 0;
+        }
 
-.result-box {
-    margin-top: 30px;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-}
+        .result-box {
+            margin-top: 30px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
 
-.attack {
-    color: red;
-    font-size: 24px;
-}
+        .attack {
+            color: red;
+            font-size: 24px;
+        }
 
-.normal {
-    color: green;
-    font-size: 24px;
-}
+        .normal {
+            color: green;
+            font-size: 24px;
+        }
 
-.btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #2a5298;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-</style>
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #1e3c72;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-    <div>
-        <h2>MENU</h2>
-        <a href="/home">Home</a>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/predict">Predict Attack</a>
-        <a href="/upload">Upload CSV</a>
-    </div>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
+    <div class="sidebar">
 
-<div class="main">
+        <div>
+            <h2>MENU</h2>
 
-    <div class="navbar">
-        <h2> PREDICTION RESULTS </h2>
+            <a href="/home">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/predict">Predict Attack</a>
+            <a href="/upload">Upload CSV</a>
+        </div>
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
 
     </div>
 
-    <div class="result-box">
-        <h2>Result</h2>
+    <div class="main">
 
-    <p class="{{ 'attack' if result == 'Attack' else 'normal' }}">
-        {{ 'Attack Detected' if result == 'Attack' else 'Normal Traffic' }}
-    </p>
-        <p>Confidence: {{ probability }}%</p>
-        <button class="btn" onclick="goBack()">Back to Predict</button>
+        <div class="navbar">
+            <h2>PREDICTION RESULTS</h2>
+        </div>
+
+        <div class="result-box">
+
+            <h2>Result</h2>
+
+            <p class="{{ 'attack' if result == 'Attack' else 'normal' }}">
+                {{ 'Attack Detected' if result == 'Attack' else 'Normal Traffic' }}
+            </p>
+
+            <p>Confidence: {{ probability }}%</p>
+
+            <button class="btn" onclick="goBack()">
+                Back to Predict
+            </button>
+
+        </div>
+
     </div>
 
-</div>
+    <script>
+        function logout() {
+            window.location.href = "/";
+        }
 
-<script>
-function logout() {
-    window.location.href = "/";
-}
-
-function goBack() {
-    window.location.href = "/predict";
-}
-</script>
+        function goBack() {
+            window.location.href = "/predict";
+        }
+    </script>
 
 </body>
 </html>
