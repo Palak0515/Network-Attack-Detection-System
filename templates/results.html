@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Results</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    display: flex;
+    background: #f4f6f9;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #2a5298;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: fixed;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.logout-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+}
+.logout-btn:hover {
+    background-color: red;
+    color: white;
+}
+
+.main {
+    flex: 1;
+    padding: 20px;
+}
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;;
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+.navbar h2 {
+    padding-left: 41%;
+}
+
+.result-box {
+    margin-top: 30px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.attack {
+    color: red;
+    font-size: 24px;
+}
+
+.normal {
+    color: green;
+    font-size: 24px;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #2a5298;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <div>
+        <h2>MENU</h2>
+        <a href="/home">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/predict">Predict Attack</a>
+        <a href="/upload">Upload CSV</a>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="main">
+
+    <div class="navbar">
+        <h2> PREDICTION RESULTS </h2>
+
+    </div>
+
+    <div class="result-box">
+        <h2>Result</h2>
+
+    <p class="{{ 'attack' if result == 'Attack' else 'normal' }}">
+        {{ 'Attack Detected' if result == 'Attack' else 'Normal Traffic' }}
+    </p>
+        <p>Confidence: {{ probability }}%</p>
+        <button class="btn" onclick="goBack()">Back to Predict</button>
+    </div>
+
+</div>
+
+<script>
+function logout() {
+    window.location.href = "/";
+}
+
+function goBack() {
+    window.location.href = "/predict";
+}
+</script>
+
+</body>
+</html>
